@@ -21,10 +21,12 @@ class Node:
     def update_node(self, distance_travelled, energy_cost, previous_node):
         if (energy_cost + self.displacement) < self.heuristic or self.visited == False:
             self.energy_cost = energy_cost
-            self.heuristic = energy_cost + self.displacement
+            self.heuristic = distance_travelled + self.displacement
             self.visited = True
             self.previous_node = previous_node
             self.distance_travelled = distance_travelled
+            return True
+        return False
 
     def get_neighbour(self):
         return self.neighbours
@@ -52,24 +54,30 @@ def task_3(G, Coord, Dist, Cost, start, end):
         nodes[i] = Node(0, 0, False, "No node", Coord[i], Coord[end], G[i])
     # initialize
     current_node = start
+    nodes[current_node].update_node(0, 0, start)
     stack_node = [current_node]
     stack_heuristic = [nodes[current_node].get_heuristic()]
-    nodes[current_node].update_node(0, 0, start)
+
 
     while len(stack_node) > 0:
+
         temp_neighbour = nodes[current_node].get_neighbour()
+
         for i in temp_neighbour:
             string_pair = ','.join([i, current_node])
             distance_successor = Dist[string_pair] + nodes[current_node].get_distance_travelled()
             energy_successor = Cost[string_pair] + nodes[current_node].get_energy_cost()
-            nodes[i].update_node(distance_successor, energy_successor, current_node)
-            stack_node.append(i)
-            stack_heuristic.append(nodes[i].get_heuristic())
+            check=nodes[i].update_node(distance_successor, energy_successor, current_node)
+            if check==True:
+                stack_node.append(i)
+                stack_heuristic.append(nodes[i].get_heuristic())
         # if current node is goal node
         if current_node == end and 0 < nodes[current_node].get_heuristic() <= 287932:
+            # TODO:STOP LOOP
             path_string = ["50"]
             previous_node = nodes[current_node].get_previous_node()
             while (nodes[previous_node] != "1"):
+                print(path_string)
                 path_string.insert(0, previous_node)
                 previous_node = nodes[previous_node].get_previous_node()
             path_string.insert(0, "1")
@@ -79,6 +87,7 @@ def task_3(G, Coord, Dist, Cost, start, end):
             print("Total energy cost: " + nodes[current_node].get_energy_cost() + ".")
             return [path_string, nodes[current_node].get_distance_travelled(), nodes[current_node].get_energy_cost()]
 
+
         # if not goal node
         minimum_heuristic = min(stack_heuristic)
         min_index = stack_heuristic.index(minimum_heuristic)
@@ -86,7 +95,4 @@ def task_3(G, Coord, Dist, Cost, start, end):
         current_node = stack_node.pop(min_index)
 
 
-        # Look at neighbours
-        # list of heuristics
-        # find min heuristic
-        # add the one with minimum heuristic and loop
+
