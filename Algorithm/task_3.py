@@ -1,20 +1,25 @@
 import math
 
 
-def task_3(G, Coord, Dist, Cost,start,end):
-
-    nodes={}
+def task_3(G, Coord, Dist, Cost, start, end):
+    nodes = {}
     for i in Coord:
-        nodes[i]=None
-    end_coordinate = Coord[end]
+        # [distance_travelled, energy cost, whether node is visited, previous_node,(displacement)]
+        # displacement refers to the displacement betwen the current node and the end node
+        nodes[i] = [-1, -1, "No node", False, tuple(displacement(Coord[i], Coord[end]))]
+    # initialize
     current_node = "1"
-    current_coordinate = Coord[current_node]
+    nodes[current_node][0] = 0
+    nodes[current_node][1] = 0
+    nodes[current_node][2] = "1"
+    nodes[current_node][3] = True
+
     current_energy = 0
     current_distance_travelled = 0
     path = ["1"]
     stack = [start]
     while len(stack) > 0:
-        if current_node == end and current_energy <= 287932:
+        if current_node == end and 0 < current_energy <= 287932:
             path_string = '->'.join([str(elem) for elem in path])
             print("Shortest path: " + path_string + ".")
             print("Shortest distance: " + current_distance_travelled + ".")
