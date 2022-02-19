@@ -1,2 +1,2 @@
-def task_2(G,Coord,Dist,Cost):
+def task_2(G,Coord,Dist,Cost,start,end):
     pass
