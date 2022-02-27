@@ -61,7 +61,7 @@ def task_1(G,Coord,Dist,Cost,start,end):
     for i in range(len(stack)-1, 0, -1):
         print(stack[i], end ="->")
     print(stack[0], end = "->")
-    print(50)
+    print(end)
     
     print("Shortest distance:", end = " ")
-    print(nodes['50'].distance)
+    print(nodes[end].distance)
