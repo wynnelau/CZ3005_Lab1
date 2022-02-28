@@ -1,8 +1,14 @@
 
 class Node:
     def __init__(self, distance, previous_node, visited):
-        self.distance = distance
+        
+        # Shortest distance from the predefined source node (S) to the current node
+        self.distance = distance 
+        
+        # Current node’s previous node
         self.previous_node = previous_node
+        
+        # Whether current node has already been visited
         self.visited = visited
         
     def get_distance(self):
@@ -16,13 +22,19 @@ class Node:
     
     
 def task_1(G,Coord,Dist,Cost,start,end):
+    # Initialise the nodes
     nodes = {}
     for i in G:
         nodes[i]= Node(-1, 'NA', False)
+        
+    # Update starting node
     current_node = start
     nodes[current_node] = Node(0, 'NA', True)
+    
+    # Create priority queue
     queue = []
     
+    # while loop will stop running once target node is reached
     while(current_node != end):
         for i in range(0, len(G[current_node])):
             if nodes[G[current_node][i]].visited == False:
@@ -46,23 +58,27 @@ def task_1(G,Coord,Dist,Cost,start,end):
                         queue.remove(queue[j-1])
                     else:
                         break 
-                        
+        
+        # Update current node from priority queue
         current_node = queue[0]
         queue.remove(current_node)
         nodes[current_node] = Node(nodes[current_node].distance, nodes[current_node].previous_node, True)
-        
+    
+    # Retreive path starting from the target node
     current_node = end
     stack = []
     while(current_node != start):
         stack.append(nodes[current_node].previous_node)
         current_node = nodes[current_node].previous_node
-        
+    
+    # Print the shortest path
     print("Shortest path:", end = " ")
     for i in range(len(stack)-1, 0, -1):
         print(stack[i], end ="->")
     print(stack[0], end = "->")
     print(end)
     
+    # Print the shortest distance
     print("Shortest distance:", end = " ")
     print(nodes[end].distance)
 
