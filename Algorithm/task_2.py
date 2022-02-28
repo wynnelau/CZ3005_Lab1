@@ -84,10 +84,10 @@ def printPath(arrayPath, Edges):
 
         pathString = tempPath[0] + "->"
         while edges < len(tempPath):
-            EdgeInstanceId = tempPath[edges - 1] + "," + tempPath[edges]
-            EdgeInstanceObj = Edges.get(EdgeInstanceId)
-            distance = distance + EdgeInstanceObj.get_dist()
-            energysum = energysum + EdgeInstanceObj.get_cost()
+            edgeid = tempPath[edges - 1] + "," + tempPath[edges]
+            edgeobject = Edges.get(edgeid)
+            distance = distance + edgeobject.get_dist()
+            energysum = energysum + edgeobject.get_cost()
             if edges == len(tempPath)-1:
                 pathString = pathString + tempPath[edges]
             else:
