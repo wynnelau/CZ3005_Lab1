@@ -1,8 +1,7 @@
 class Node:
-    def __init__(self, distance, previous_node, visited, cost):
+    def __init__(self, distance, previous_node, cost):
         self.distance = distance
         self.previous_node = previous_node
-        self.visited = visited
         self.cost = cost
         
     def get_distance(self):
@@ -10,9 +9,6 @@ class Node:
     
     def get_previous_node(self):
         return self.previous_node
-    
-    def get_visited(self):
-        return self.visited
     
     def get_cost(self):
         return self.cost
@@ -23,11 +19,11 @@ def task_2(G,Coord,Dist,Cost,start,end):
     energyBudget = 287932
     nodes = {}
     for i in G:
-        nodes[i]= Node(-1, 'NA', False, 0)
+        nodes[i]= Node(-1, 'NA', 0)
     current_node = start
     dictExplored = {}
     dictExplored[start] = None
-    nodes[current_node] = Node(0, 'NA', True, 0)
+    nodes[current_node] = Node(0, 'NA', 0)
   
     q = PriorityQueue()
     q.put([0, current_node])
@@ -36,7 +32,7 @@ def task_2(G,Coord,Dist,Cost,start,end):
     while(not q.empty()):
         current_node = q.get()[1]
 
-        nodes[current_node] = Node(nodes[current_node].distance, nodes[current_node].previous_node, True, nodes[current_node].cost)
+        nodes[current_node] = Node(nodes[current_node].distance, nodes[current_node].previous_node, nodes[current_node].cost)
         
         if(current_node == end):
             break
@@ -54,7 +50,7 @@ def task_2(G,Coord,Dist,Cost,start,end):
                 if(newCost <= energyBudget):
                     q.put((newDist, item))
                     dictExplored[item] = current_node
-                    nodes[item] = Node(newDist, current_node, nodes[item].visited, newCost)
+                    nodes[item] = Node(newDist, current_node, newCost)
         
     
 
