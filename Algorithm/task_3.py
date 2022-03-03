@@ -1,6 +1,8 @@
 import math
 
-budget=290000
+budget = 287932
+
+
 def displacement(a, b):
     displacement_current = math.sqrt(
         (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2)
@@ -20,7 +22,7 @@ class Node:
 
     def update_node(self, distance_travelled, energy_cost, previous_node):
         if ((distance_travelled + self.displacement) < self.heuristic or self.visited == False) \
-                and energy_cost <= budget:
+                and energy_cost + self.displacement <= budget:
             self.energy_cost = energy_cost
             self.heuristic = distance_travelled + self.displacement
             self.visited = True
@@ -58,17 +60,19 @@ def task_3(G, Coord, Dist, Cost, start, end):
     nodes[current_node].update_node(0, 0, start)
     stack_node = [current_node]
     stack_heuristic = [nodes[current_node].get_heuristic()]
-
+    cycles = 0
     while len(stack_node) > 0:
 
         temp_neighbour = nodes[current_node].get_neighbour()
 
         for i in temp_neighbour:
+
             string_pair = ','.join([i, current_node])
             distance_successor = Dist[string_pair] + nodes[current_node].get_distance_travelled()
             energy_successor = Cost[string_pair] + nodes[current_node].get_energy_cost()
             check = nodes[i].update_node(distance_successor, energy_successor, current_node)
             if check == True:
+                cycles += 1
                 if current_node not in stack_node:
                     stack_node.append(current_node)
                     stack_heuristic.append(nodes[current_node].get_heuristic())
@@ -90,6 +94,7 @@ def task_3(G, Coord, Dist, Cost, start, end):
             print("Shortest path: " + path_string_actual + ".")
             print("Shortest distance: " + str(nodes[current_node].get_distance_travelled()) + ".")
             print("Total energy cost: " + str(nodes[current_node].get_energy_cost()) + ".")
+            print(" ")
             return [path_string, nodes[current_node].get_distance_travelled(), nodes[current_node].get_energy_cost()]
 
         # if not goal node
@@ -97,4 +102,3 @@ def task_3(G, Coord, Dist, Cost, start, end):
         min_index = stack_heuristic.index(minimum_heuristic)
         stack_heuristic.pop(min_index)
         current_node = stack_node.pop(min_index)
-
