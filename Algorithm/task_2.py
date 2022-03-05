@@ -70,3 +70,4 @@ def task_2(G,Coord,Dist,Cost,start,end):
     print(nodes[end].distance)
 
     print("Total energy cost:", nodes[end].cost)
+    print (" ")

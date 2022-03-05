@@ -81,5 +81,6 @@ def task_1(G,Coord,Dist,Cost,start,end):
     # Print the shortest distance
     print("Shortest distance:", end = " ")
     print(nodes[end].distance)
+    print(" ")
 
 
