@@ -17,7 +17,7 @@ class Node:
     
 def task_2(G,Coord,Dist,Cost,start,end):
     from queue import PriorityQueue
-    numNodes = 0
+    #numNodes = 0
     energyBudget = 287931
     nodes = {}
     for i in G:
@@ -35,7 +35,7 @@ def task_2(G,Coord,Dist,Cost,start,end):
         current_node = q.get()[1]
 
         nodes[current_node] = Node(nodes[current_node].distance, nodes[current_node].previous_node, nodes[current_node].cost)
-        numNodes += 1
+        #numNodes += 1
         if(current_node == end):
             break
         
@@ -72,4 +72,4 @@ def task_2(G,Coord,Dist,Cost,start,end):
     print(nodes[end].distance)
 
     print("Total energy cost:", nodes[end].cost)
-    print("Nodes expanded:", numNodes)
+    #print("Nodes expanded:", numNodes)
