@@ -1,3 +1,3 @@
 # CZ3005_Lab1
 
-Group assignement in Year 2 Sem 2
+Group assignment in Year 2 Sem 2
